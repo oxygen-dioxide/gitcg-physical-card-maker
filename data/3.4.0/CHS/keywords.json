@@ -1,0 +1,373 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": -1,
+      "rawName": "<color=#FFFFFFFF>战斗行动</color>",
+      "name": "战斗行动",
+      "rawDescription": "我方执行了一次战斗行动后，会轮到对方行动。\\n<color=#FFFFFFFF>打出具有此规则的手牌是一个战斗行动，而非快速行动。</color>",
+      "description": "我方执行了一次战斗行动后，会轮到对方行动。\n打出具有此规则的手牌是一个战斗行动，而非快速行动。",
+      "category": "keywords"
+    },
+    {
+      "id": -2,
+      "rawName": "<color=#FFFFFFFF>快速行动</color>",
+      "name": "快速行动",
+      "rawDescription": "执行了一次快速行动后，我方可以继续进行其他行动。\\n只有执行了一次战斗行动后，才会轮到对方行动。",
+      "description": "执行了一次快速行动后，我方可以继续进行其他行动。\n只有执行了一次战斗行动后，才会轮到对方行动。",
+      "category": "keywords"
+    },
+    {
+      "id": -3,
+      "rawName": "<color=#FFFFFFFF>可用次数</color>",
+      "name": "可用次数",
+      "rawDescription": "此牌效果触发后，会消耗1次<color=#FFFFFFFF>可用次数</color>；\\n<color=#FFFFFFFF>可用次数</color>耗尽后，立刻弃置此牌。",
+      "description": "此牌效果触发后，会消耗1次可用次数；\n可用次数耗尽后，立刻弃置此牌。",
+      "category": "keywords"
+    },
+    {
+      "id": -4,
+      "rawName": "<color=#FFFFFFFF>持续回合</color>",
+      "name": "持续回合",
+      "rawDescription": "每回合结束阶段，<color=#FFFFFFFF>持续回合</color>-1；\\n<color=#FFFFFFFF>持续回合</color>耗尽后，立刻弃置此牌。",
+      "description": "每回合结束阶段，持续回合-1；\n持续回合耗尽后，立刻弃置此牌。",
+      "category": "keywords"
+    },
+    {
+      "id": -5,
+      "rawName": "<color=#FFFFFFFF>穿透伤害</color>",
+      "name": "穿透伤害",
+      "rawDescription": "穿透伤害无法受到伤害加成，但是也无法被护盾、伤害免疫等效果抵消。",
+      "description": "穿透伤害无法受到伤害加成，但是也无法被护盾、伤害免疫等效果抵消。",
+      "category": "keywords"
+    },
+    {
+      "id": -6,
+      "rawName": "{SPRITE_PRESET#4007}<color=#FFFFFFFF>护盾</color>",
+      "name": "护盾",
+      "rawDescription": "此护盾所保护的角色受到伤害时，将会消耗护盾来抵消伤害。",
+      "description": "此护盾所保护的角色受到伤害时，将会消耗护盾来抵消伤害。",
+      "category": "keywords"
+    },
+    {
+      "id": -51,
+      "rawName": "<color=#FFFFFFFF>重击</color>",
+      "name": "重击",
+      "rawDescription": "我方元素骰总数为偶数时进行的「普通攻击」，视为「重击」。",
+      "description": "我方元素骰总数为偶数时进行的「普通攻击」，视为「重击」。",
+      "category": "keywords"
+    },
+    {
+      "id": -53,
+      "rawName": "<color=#FFFFFFFF>准备技能</color>",
+      "name": "准备技能",
+      "rawDescription": "有些技能无法被直接使用，而是需要一定次数的行动轮来进行<color=#FFFFFFFF>准备</color>。\\n轮到一位牌手行动时，如果该牌手的「出战角色」正在<color=#FFFFFFFF>准备</color>技能，则跳过该牌手的行动；如果技能已经完成<color=#FFFFFFFF>准备</color>，角色将会在此时直接使用此技能。（此类需要<color=#FFFFFFFF>准备</color>的技能，无法触发「使用技能后」效果。）\\n只有「出战角色」才能<color=#FFFFFFFF>准备</color>技能；如果正在<color=#FFFFFFFF>准备</color>技能的「出战角色」被切换到后台，技能的<color=#FFFFFFFF>准备</color>就会被打断。",
+      "description": "有些技能无法被直接使用，而是需要一定次数的行动轮来进行准备。\n轮到一位牌手行动时，如果该牌手的「出战角色」正在准备技能，则跳过该牌手的行动；如果技能已经完成准备，角色将会在此时直接使用此技能。（此类需要准备的技能，无法触发「使用技能后」效果。）\n只有「出战角色」才能准备技能；如果正在准备技能的「出战角色」被切换到后台，技能的准备就会被打断。",
+      "category": "keywords"
+    },
+    {
+      "id": -100,
+      "rawName": "{SPRITE_PRESET#2100}<color=#FFFFFFFF>物理伤害</color>",
+      "name": "物理伤害",
+      "rawDescription": "物理伤害不会附着元素，也不会发生元素反应。",
+      "description": "物理伤害不会附着元素，也不会发生元素反应。",
+      "category": "keywords"
+    },
+    {
+      "id": -101,
+      "rawName": "{SPRITE_PRESET#2101}<color=#99FFFFFF>冰元素伤害</color>",
+      "name": "冰元素伤害",
+      "rawDescription": "附着{SPRITE_PRESET#2101}冰元素，可发生元素反应：\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2103}<color=#FFFFFFFF>融化</color>：本伤害+2\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2104}<color=#FFFFFFFF>超导</color>：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2102}<color=#FFFFFFFF>冻结</color>：本伤害+1，使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）",
+      "description": "附着冰元素，可发生元素反应：\n融化：本伤害+2\n超导：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\n冻结：本伤害+1，使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）",
+      "category": "keywords"
+    },
+    {
+      "id": -102,
+      "rawName": "{SPRITE_PRESET#2102}<color=#80C0FFFF>水元素伤害</color>",
+      "name": "水元素伤害",
+      "rawDescription": "附着{SPRITE_PRESET#2102}水元素，可发生元素反应：\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2103}<color=#FFFFFFFF>蒸发</color>：本伤害+2\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2104}<color=#FFFFFFFF>感电</color>：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2101}<color=#FFFFFFFF>冻结</color>：本伤害+1，使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2107}<color=#FFFFFFFF>绽放</color>：本伤害+1，生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]",
+      "description": "附着水元素，可发生元素反应：\n蒸发：本伤害+2\n感电：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\n冻结：本伤害+1，使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\n绽放：本伤害+1，生成使下次火元素或雷元素伤害+2的[草原核]",
+      "category": "keywords"
+    },
+    {
+      "id": -103,
+      "rawName": "{SPRITE_PRESET#2103}<color=#FF9999FF>火元素伤害</color>",
+      "name": "火元素伤害",
+      "rawDescription": "附着{SPRITE_PRESET#2103}火元素，可发生元素反应：\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2101}<color=#FFFFFFFF>融化</color>：本伤害+2\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2102}<color=#FFFFFFFF>蒸发</color>：本伤害+2\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2104}<color=#FFFFFFFF>超载</color>：本伤害+2，目标强制切换到下一个角色\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2107}<color=#FFFFFFFF>燃烧</color>：本伤害+1，生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）",
+      "description": "附着火元素，可发生元素反应：\n融化：本伤害+2\n蒸发：本伤害+2\n超载：本伤害+2，目标强制切换到下一个角色\n燃烧：本伤害+1，生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）",
+      "category": "keywords"
+    },
+    {
+      "id": -104,
+      "rawName": "{SPRITE_PRESET#2104}<color=#FFACFFFF>雷元素伤害</color>",
+      "name": "雷元素伤害",
+      "rawDescription": "附着{SPRITE_PRESET#2104}雷元素，可发生元素反应：\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2103}<color=#FFFFFFFF>超载</color>：本伤害+2，目标强制切换到下一个角色\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2101}<color=#FFFFFFFF>超导</color>：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2102}<color=#FFFFFFFF>感电</color>：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2107}<color=#FFFFFFFF>原激化</color>：本伤害+1，生成使下2次草元素或雷元素伤害+1的[<color=#FFFFFFFF>激化领域</color>]",
+      "description": "附着雷元素，可发生元素反应：\n超载：本伤害+2，目标强制切换到下一个角色\n超导：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\n感电：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\n原激化：本伤害+1，生成使下2次草元素或雷元素伤害+1的[激化领域]",
+      "category": "keywords"
+    },
+    {
+      "id": -105,
+      "rawName": "{SPRITE_PRESET#2105}<color=#80FFD7FF>风元素伤害</color>",
+      "name": "风元素伤害",
+      "rawDescription": "和已附着的元素发生元素反应：\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2101}<color=#FFFFFFFF>扩散（冰）</color>：对目标以外的所有敌方角色造成1点冰元素伤害\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2102}<color=#FFFFFFFF>扩散（水）</color>：对目标以外的所有敌方角色造成1点水元素伤害\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2103}<color=#FFFFFFFF>扩散（火）</color>：对目标以外的所有敌方角色造成1点火元素伤害\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2104}<color=#FFFFFFFF>扩散（雷）</color>：对目标以外的所有敌方角色造成1点雷元素伤害",
+      "description": "和已附着的元素发生元素反应：\n扩散（冰）：对目标以外的所有敌方角色造成1点冰元素伤害\n扩散（水）：对目标以外的所有敌方角色造成1点水元素伤害\n扩散（火）：对目标以外的所有敌方角色造成1点火元素伤害\n扩散（雷）：对目标以外的所有敌方角色造成1点雷元素伤害",
+      "category": "keywords"
+    },
+    {
+      "id": -106,
+      "rawName": "{SPRITE_PRESET#2106}<color=#FFE699FF>岩元素伤害</color>",
+      "name": "岩元素伤害",
+      "rawDescription": "和已附着的元素发生元素反应：\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2101}<color=#FFFFFFFF>结晶（冰）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2102}<color=#FFFFFFFF>结晶（水）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2103}<color=#FFFFFFFF>结晶（火）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2104}<color=#FFFFFFFF>结晶（雷）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。",
+      "description": "和已附着的元素发生元素反应：\n结晶（冰）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\n结晶（水）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\n结晶（火）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\n结晶（雷）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。",
+      "category": "keywords"
+    },
+    {
+      "id": -107,
+      "rawName": "{SPRITE_PRESET#2107}<color=#7EC236FF>草元素伤害</color>",
+      "name": "草元素伤害",
+      "rawDescription": "附着{SPRITE_PRESET#2107}草元素，可发生元素反应：\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2102}<color=#FFFFFFFF>绽放</color>：本伤害+1，生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2103}<color=#FFFFFFFF>燃烧</color>：本伤害+1，生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2104}<color=#FFFFFFFF>原激化</color>：本伤害+1，生成使下2次草元素或雷元素伤害+1的[<color=#FFFFFFFF>激化领域</color>]",
+      "description": "附着草元素，可发生元素反应：\n绽放：本伤害+1，生成使下次火元素或雷元素伤害+2的[草原核]\n燃烧：本伤害+1，生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）\n原激化：本伤害+1，生成使下2次草元素或雷元素伤害+1的[激化领域]",
+      "category": "keywords"
+    },
+    {
+      "id": -111,
+      "rawName": "{SPRITE_PRESET#2101}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -112,
+      "rawName": "{SPRITE_PRESET#2102}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -113,
+      "rawName": "{SPRITE_PRESET#2103}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -114,
+      "rawName": "{SPRITE_PRESET#2104}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -115,
+      "rawName": "{SPRITE_PRESET#2105}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -116,
+      "rawName": "{SPRITE_PRESET#2106}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -117,
+      "rawName": "{SPRITE_PRESET#2107}",
+      "name": "",
+      "rawDescription": "",
+      "description": "",
+      "category": "keywords"
+    },
+    {
+      "id": -201,
+      "rawName": "<color=#99FFFFFF>附着{SPRITE_PRESET#2101}冰元素</color>",
+      "name": "附着冰元素",
+      "rawDescription": "不通过伤害附着{SPRITE_PRESET#2101}冰元素时，发生的元素反应会忽略伤害效果：\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2103}<color=#FFFFFFFF>融化</color>：没有效果\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2104}<color=#FFFFFFFF>超导</color>：没有效果\\n{SPRITE_PRESET#2101}{SPRITE_PRESET#2102}<color=#FFFFFFFF>冻结</color>：使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）",
+      "description": "不通过伤害附着冰元素时，发生的元素反应会忽略伤害效果：\n融化：没有效果\n超导：没有效果\n冻结：使目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）",
+      "category": "keywords"
+    },
+    {
+      "id": -202,
+      "rawName": "<color=#80C0FFFF>附着{SPRITE_PRESET#2102}水元素</color>",
+      "name": "附着水元素",
+      "rawDescription": "不通过伤害附着{SPRITE_PRESET#2102}水元素时，发生的元素反应会忽略伤害效果：\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2103}<color=#FFFFFFFF>蒸发</color>：没有效果\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2104}<color=#FFFFFFFF>感电</color>：没有效果\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2101}<color=#FFFFFFFF>冻结</color>：目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2107}<color=#FFFFFFFF>绽放</color>：生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]",
+      "description": "不通过伤害附着水元素时，发生的元素反应会忽略伤害效果：\n蒸发：没有效果\n感电：没有效果\n冻结：目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\n绽放：生成使下次火元素或雷元素伤害+2的[草原核]",
+      "category": "keywords"
+    },
+    {
+      "id": -203,
+      "rawName": "<color=#FF9999FF>附着{SPRITE_PRESET#2103}火元素</color>",
+      "name": "附着火元素",
+      "rawDescription": "不通过伤害附着{SPRITE_PRESET#2103}火元素时，发生的元素反应会忽略伤害效果：\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2101}<color=#FFFFFFFF>融化</color>：没有效果\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2102}<color=#FFFFFFFF>蒸发</color>：没有效果\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2104}<color=#FFFFFFFF>超载</color>：目标强制切换到下一个角色\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2107}<color=#FFFFFFFF>燃烧</color>：生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）",
+      "description": "不通过伤害附着火元素时，发生的元素反应会忽略伤害效果：\n融化：没有效果\n蒸发：没有效果\n超载：目标强制切换到下一个角色\n燃烧：生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）",
+      "category": "keywords"
+    },
+    {
+      "id": -204,
+      "rawName": "<color=#FFACFFFF>附着{SPRITE_PRESET#2104}雷元素</color>",
+      "name": "附着雷元素",
+      "rawDescription": "不通过伤害附着{SPRITE_PRESET#2104}雷元素时，发生的元素反应会忽略伤害效果：\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2103}<color=#FFFFFFFF>超载</color>：目标强制切换到下一个角色\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2101}<color=#FFFFFFFF>超导</color>：没有效果\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2102}<color=#FFFFFFFF>感电</color>：没有效果\\n{SPRITE_PRESET#2104}{SPRITE_PRESET#2107}<color=#FFFFFFFF>原激化</color>：生成使下2次草元素或雷元素伤害+1的[<color=#FFFFFFFF>激化领域</color>]",
+      "description": "不通过伤害附着雷元素时，发生的元素反应会忽略伤害效果：\n超载：目标强制切换到下一个角色\n超导：没有效果\n感电：没有效果\n原激化：生成使下2次草元素或雷元素伤害+1的[激化领域]",
+      "category": "keywords"
+    },
+    {
+      "id": -207,
+      "rawName": "<color=#7EC236FF>附着{SPRITE_PRESET#2107}草元素</color>",
+      "name": "附着草元素",
+      "rawDescription": "不通过伤害附着{SPRITE_PRESET#2107}草元素时，发生的元素反应会忽略伤害效果：\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2102}<color=#FFFFFFFF>绽放</color>：生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2103}<color=#FFFFFFFF>燃烧</color>：生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2104}<color=#FFFFFFFF>原激化</color>：生成使下2次草元素或雷元素伤害+1的[<color=#FFFFFFFF>激化领域</color>]",
+      "description": "不通过伤害附着草元素时，发生的元素反应会忽略伤害效果：\n绽放：生成使下次火元素或雷元素伤害+2的[草原核]\n燃烧：生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）\n原激化：生成使下2次草元素或雷元素伤害+1的[激化领域]",
+      "category": "keywords"
+    },
+    {
+      "id": -212,
+      "rawName": "<color=#80C0FFFF>{SPRITE_PRESET#2102}水元素相关反应</color>",
+      "name": "水元素相关反应",
+      "rawDescription": "{SPRITE_PRESET#2102}{SPRITE_PRESET#2103}<color=#FFFFFFFF>蒸发</color>：本伤害+2\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2104}<color=#FFFFFFFF>感电</color>：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2101}<color=#FFFFFFFF>冻结</color>：本伤害+1，目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\\n{SPRITE_PRESET#2102}{SPRITE_PRESET#2107}<color=#FFFFFFFF>绽放</color>：生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2102}<color=#FFFFFFFF>结晶（水）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2102}<color=#FFFFFFFF>扩散（水）</color>：对目标以外的所有敌方角色造成1点水伤害。",
+      "description": "蒸发：本伤害+2\n感电：本伤害+1，对目标以外的所有敌方角色造成1点穿透伤害\n冻结：本伤害+1，目标本回合无法行动（受到物理或火元素伤害后提前解除，但是伤害+2）\n绽放：生成使下次火元素或雷元素伤害+2的[草原核]\n结晶（水）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\n扩散（水）：对目标以外的所有敌方角色造成1点水伤害。",
+      "category": "keywords"
+    },
+    {
+      "id": -213,
+      "rawName": "<color=#FF9999FF>{SPRITE_PRESET#2103}火元素相关反应</color>",
+      "name": "火元素相关反应",
+      "rawDescription": "{SPRITE_PRESET#2103}{SPRITE_PRESET#2101}<color=#FFFFFFFF>融化</color>：本伤害+2\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2102}<color=#FFFFFFFF>蒸发</color>：本伤害+2\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2104}<color=#FFFFFFFF>超载</color>：本伤害+2，目标强制切换到下一个角色\\n{SPRITE_PRESET#2103}{SPRITE_PRESET#2107}<color=#FFFFFFFF>燃烧</color>：本伤害+1，生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）\\n{SPRITE_PRESET#2106}{SPRITE_PRESET#2103}<color=#FFFFFFFF>结晶（火）</color>：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\\n{SPRITE_PRESET#2105}{SPRITE_PRESET#2103}<color=#FFFFFFFF>扩散（火）</color>：对目标以外的所有敌方角色造成1点火元素伤害",
+      "description": "融化：本伤害+2\n蒸发：本伤害+2\n超载：本伤害+2，目标强制切换到下一个角色\n燃烧：本伤害+1，生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）\n结晶（火）：本伤害+1，我方出战角色获得1点护盾（可叠加，最多2点）。\n扩散（火）：对目标以外的所有敌方角色造成1点火元素伤害",
+      "category": "keywords"
+    },
+    {
+      "id": -217,
+      "rawName": "<color=#7EC236FF>{SPRITE_PRESET#2107}草元素相关反应</color>",
+      "name": "草元素相关反应",
+      "rawDescription": "{SPRITE_PRESET#2107}{SPRITE_PRESET#2102}<color=#FFFFFFFF>绽放</color>：本伤害+1，生成使下次火元素或雷元素伤害+2的[<color=#FFFFFFFF>草原核</color>]\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2103}<color=#FFFFFFFF>燃烧</color>：本伤害+1，生成回合结束时造成1点火元素伤害的[<color=#FFFFFFFF>燃烧烈焰</color>]（可用次数1，最多叠加到2）\\n{SPRITE_PRESET#2107}{SPRITE_PRESET#2104}<color=#FFFFFFFF>原激化</color>：本伤害+1，生成使下2次草元素或雷元素伤害+1的[<color=#FFFFFFFF>激化领域</color>]",
+      "description": "绽放：本伤害+1，生成使下次火元素或雷元素伤害+2的[草原核]\n燃烧：本伤害+1，生成回合结束时造成1点火元素伤害的[燃烧烈焰]（可用次数1，最多叠加到2）\n原激化：本伤害+1，生成使下2次草元素或雷元素伤害+1的[激化领域]",
+      "category": "keywords"
+    },
+    {
+      "id": -301,
+      "rawName": "{SPRITE_PRESET#1101}冰元素",
+      "name": "冰元素",
+      "rawDescription": "花费投出了<color=#99FFFFFF>{SPRITE_PRESET#1101}冰元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了冰元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -302,
+      "rawName": "{SPRITE_PRESET#1102}水元素",
+      "name": "水元素",
+      "rawDescription": "花费投出了<color=#80C0FFFF>{SPRITE_PRESET#1102}水元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了水元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -303,
+      "rawName": "{SPRITE_PRESET#1103}火元素",
+      "name": "火元素",
+      "rawDescription": "花费投出了<color=#FF9999FF>{SPRITE_PRESET#1103}火元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了火元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -304,
+      "rawName": "{SPRITE_PRESET#1104}雷元素",
+      "name": "雷元素",
+      "rawDescription": "花费投出了<color=#FFACFFFF>{SPRITE_PRESET#1104}雷元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了雷元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -305,
+      "rawName": "{SPRITE_PRESET#1105}风元素",
+      "name": "风元素",
+      "rawDescription": "花费投出了<color=#80FFD7FF>{SPRITE_PRESET#1105}风元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了风元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -306,
+      "rawName": "{SPRITE_PRESET#1106}岩元素",
+      "name": "岩元素",
+      "rawDescription": "花费投出了<color=#FFE699FF>{SPRITE_PRESET#1106}岩元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了岩元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -307,
+      "rawName": "{SPRITE_PRESET#1107}草元素",
+      "name": "草元素",
+      "rawDescription": "花费投出了<color=#7EC236FF>{SPRITE_PRESET#1107}草元素</color>的元素骰，来支付此费用。\\n（{SPRITE_PRESET#1111}万能元素也可以支付此费用。）",
+      "description": "花费投出了草元素的元素骰，来支付此费用。\n（万能元素也可以支付此费用。）",
+      "category": "keywords"
+    },
+    {
+      "id": -308,
+      "rawName": "<color=#FFFFFFFF>{SPRITE_PRESET#1108}相同元素</color>",
+      "name": "相同元素",
+      "rawDescription": "必须用指定数量的相同类型元素骰子，来支付此类费用。\\n（{SPRITE_PRESET#1111}万能元素被视为和任何元素相同。）",
+      "description": "必须用指定数量的相同类型元素骰子，来支付此类费用。\n（万能元素被视为和任何元素相同。）",
+      "category": "keywords"
+    },
+    {
+      "id": -309,
+      "rawName": "<color=#FFFFFFFF>{SPRITE_PRESET#1109}无色元素</color>",
+      "name": "无色元素",
+      "rawDescription": "可以用任意类型的元素骰子组合，来支付此类费用。",
+      "description": "可以用任意类型的元素骰子组合，来支付此类费用。",
+      "category": "keywords"
+    },
+    {
+      "id": -310,
+      "rawName": "<color=#FFFFFFFF>{SPRITE_PRESET#1110}充能</color>",
+      "name": "充能",
+      "rawDescription": "角色使用「元素爆发」时，需要消耗{SPRITE_PRESET#1110}充能。\\n角色使用「元素战技」或「普通攻击」后，会获得1点{SPRITE_PRESET#1110}充能。",
+      "description": "角色使用「元素爆发」时，需要消耗充能。\n角色使用「元素战技」或「普通攻击」后，会获得1点充能。",
+      "category": "keywords"
+    },
+    {
+      "id": -411,
+      "rawName": "<color=#FFFFFFFF>{SPRITE_PRESET#1111}万能元素</color>",
+      "name": "万能元素",
+      "rawDescription": "{SPRITE_PRESET#1111}万能元素可以视为任何类型的元素，来支付各种费用。",
+      "description": "万能元素可以视为任何类型的元素，来支付各种费用。",
+      "category": "keywords"
+    },
+    {
+      "id": -501,
+      "rawName": "元素爆发",
+      "name": "元素爆发",
+      "rawDescription": "角色的{SPRITE_PRESET#1110}充能达到上限时，可以消耗所有的{SPRITE_PRESET#1110}充能，来使用威力强大的「元素爆发」。",
+      "description": "角色的充能达到上限时，可以消耗所有的充能，来使用威力强大的「元素爆发」。",
+      "category": "keywords"
+    },
+    {
+      "id": -502,
+      "rawName": "被动技能",
+      "name": "被动技能",
+      "rawDescription": "这类技能会持续生效，无需主动使用。",
+      "description": "这类技能会持续生效，无需主动使用。",
+      "category": "keywords"
+    },
+    {
+      "id": -1001,
+      "rawName": "<color=#FFFFFFFF>随机「丘丘人」召唤物</color>",
+      "name": "随机「丘丘人」召唤物",
+      "rawDescription": "可能出现的「丘丘人」召唤物共有4种：\\n<color=#FFFFFFFF>冰箭丘丘人</color>：结束阶段造成1点{SPRITE_PRESET#2101}<color=#99FFFFFF>冰元素伤害</color>，可用次数2。\\n<color=#FFFFFFFF>水丘丘萨满</color>：结束阶段造成1点{SPRITE_PRESET#2102}<color=#80C0FFFF>水元素伤害</color>，可用次数2。\\n<color=#FFFFFFFF>冲锋丘丘人</color>：结束阶段造成1点{SPRITE_PRESET#2103}<color=#FF9999FF>火元素伤害</color>，可用次数2。\\n<color=#FFFFFFFF>雷箭丘丘人</color>：结束阶段造成1点{SPRITE_PRESET#2104}<color=#FFACFFFF>雷元素伤害</color>，可用次数2。",
+      "description": "可能出现的「丘丘人」召唤物共有4种：\n冰箭丘丘人：结束阶段造成1点冰元素伤害，可用次数2。\n水丘丘萨满：结束阶段造成1点水元素伤害，可用次数2。\n冲锋丘丘人：结束阶段造成1点火元素伤害，可用次数2。\n雷箭丘丘人：结束阶段造成1点雷元素伤害，可用次数2。",
+      "category": "keywords"
+    },
+    {
+      "id": -1002,
+      "rawName": "<color=#FFFFFFFF>雷元素附魔</color>",
+      "name": "雷元素附魔",
+      "rawDescription": "所附属角色造成的{SPRITE_PRESET#2100}<color=#FFFFFFFF>物理伤害</color>变为{SPRITE_PRESET#2104}<color=#FFACFFFF>雷元素伤害</color>。\\n<color=#FFFFFFFF>持续回合</color>：2",
+      "description": "所附属角色造成的物理伤害变为雷元素伤害。\n持续回合：2",
+      "category": "keywords"
+    }
+  ]
+}
