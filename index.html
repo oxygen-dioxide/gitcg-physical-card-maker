@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>七圣召唤实体卡图制作器</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="panel controls-panel">
+        <header class="panel-header">
+          <h1>七圣召唤实体卡图制作器</h1>
+          <p>上传背景图或从 `action_cards` 中选卡，实时预览并导出卡图。</p>
+        </header>
+
+        <section class="control-section">
+          <div class="section-title">数据库卡牌</div>
+          <label class="field">
+            <span>搜索行动牌</span>
+            <input
+              id="card-search"
+              list="card-options"
+              placeholder="输入名称或 id，例如：冒险憧憬"
+              autocomplete="off"
+            />
+            <datalist id="card-options"></datalist>
+          </label>
+          <div class="button-row">
+            <button id="apply-card" type="button">载入卡牌信息</button>
+            <button id="load-remote-image" type="button" class="secondary">载入卡牌背景</button>
+          </div>
+          <div id="card-meta" class="hint">正在读取最新版本 `action_cards` 数据…</div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">背景图</div>
+          <label class="field">
+            <span>上传背景图</span>
+            <input id="image-upload" type="file" accept="image/*" />
+          </label>
+          <div class="crop-workspace">
+            <canvas id="crop-editor" width="360" height="240" aria-label="裁剪预览"></canvas>
+            <div class="hint">自动按 88:63 居中裁剪，可拖动选区或用滑块微调。</div>
+          </div>
+          <div class="slider-grid">
+            <label class="field compact">
+              <span>缩放</span>
+              <input id="zoom-range" type="range" min="1" max="4" step="0.01" value="1" />
+            </label>
+            <label class="field compact">
+              <span>水平</span>
+              <input id="offset-x-range" type="range" min="0" max="1" step="0.001" value="0.5" />
+            </label>
+            <label class="field compact">
+              <span>垂直</span>
+              <input id="offset-y-range" type="range" min="0" max="1" step="0.001" value="0.5" />
+            </label>
+          </div>
+          <div class="button-row">
+            <button id="reset-crop" type="button" class="secondary">重置裁剪</button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">卡牌文本</div>
+          <label class="field">
+            <span>名称</span>
+            <input id="name-input" type="text" placeholder="输入卡牌名称" />
+          </label>
+          <label class="field">
+            <span>标签</span>
+            <input id="tags-input" type="text" placeholder="使用顿号、逗号或空格分隔，例如：装备牌、天赋、战斗行动" />
+          </label>
+          <label class="field">
+            <span>效果描述</span>
+            <textarea id="description-input" rows="7" placeholder="输入效果描述，支持换行"></textarea>
+          </label>
+          <div class="split-grid">
+            <label class="field">
+              <span>左下角文本</span>
+              <input id="bottom-left-input" type="text" placeholder="例如：©miHoYo ©SHININGSOUL" />
+            </label>
+            <label class="field">
+              <span>右下角文本</span>
+              <input id="bottom-right-input" type="text" placeholder="例如：GCG32S-A036" />
+            </label>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">费用</div>
+          <div id="cost-list" class="cost-list"></div>
+          <button id="add-cost" type="button" class="secondary">新增费用</button>
+        </section>
+      </aside>
+
+      <main class="panel preview-panel">
+        <div class="preview-toolbar">
+          <div id="status-text" class="hint">等待背景图…</div>
+          <button id="download-image" type="button">下载图片</button>
+        </div>
+        <div class="preview-stage">
+          <canvas id="preview-canvas" width="880" height="630" aria-label="卡图预览"></canvas>
+        </div>
+      </main>
+    </div>
+
+    <template id="cost-row-template">
+      <div class="cost-row">
+        <select class="cost-type"></select>
+        <input class="cost-count" type="number" min="0" max="20" step="1" value="1" />
+        <button class="danger remove-cost" type="button">删除</button>
+      </div>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
