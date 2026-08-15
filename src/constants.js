@@ -46,6 +46,7 @@ export const TAG_DEFS = {
   GCG_TAG_CARD_BLESSING: { label: '元素幻变', icon: 'UI_Gcg_Tag_Card_Blessing.png' },
   GCG_TAG_ADVENTURE_PLACE: { label: '冒险地点', icon: 'UI_Gcg_Tag_Card_Adventure.png' },
   GCG_TAG_NATION_SIMULANKA: { label: '希穆兰卡', icon: 'UI_Gcg_Tag_Card_Simulanka.png' },
+  GCG_TAG_SLOWLY: { label: '魔导', icon: 'UI_Gcg_Tag_Hexenzirkel.png' },
   GCG_TAG_SLOWLY: { label: '战斗行动', icon: 'UI_Gcg_Tag_Card_CombatAction.png' },
 }
 

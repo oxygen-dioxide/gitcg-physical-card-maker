@@ -1,4 +1,4 @@
-import actionCardsData from '../data/6.7.0/CHS/action_cards.json'
+import actionCardsData from '../data/7.0.0/CHS/action_cards.json'
 
 const { data } = actionCardsData
 
