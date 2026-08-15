@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提瓦特煎蛋卡牌</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 游戏卡片容器 */
+        .card {
+            width: 315px; /* 长宽比约为 63:88 */
+            height: 440px; 
+            background-image: url('https://static-data.piovium.org/api/v4/image/333009');
+            background-position: center; /* 裁剪中部 */
+            background-size: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #ccc;
+        }
+
+        /* 费用 (左上角)：使用本地图片背景 */
+        .cost {
+            position: absolute;
+            top: 10px; 
+            left: 10px;
+            width: 48px; 
+            height: 48px;
+            /* 相对路径引用本地骰子/费用图片 */
+            background-image: url('public/assets/UI_Gcg_DiceL_Same_Glow_HD.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 26px; 
+            font-weight: bold; 
+            color: #333;
+            z-index: 10;
+        }
+
+        /* 名称 (正上方) */
+        .name-banner {
+            position: absolute;
+            top: 15px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px; 
+            height: 30px;
+            background: linear-gradient(to bottom, #ded8c5, #fcfaf3);
+            border-radius: 5px;
+            border: 2px solid #c8b98b;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 16px; 
+            font-weight: bold; 
+            color: #ac7e51;
+            z-index: 10;
+        }
+        .name-banner:before, .name-banner:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px; 
+            height: 8px;
+            background-color: #c8b98b;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        .name-banner:before { left: -12px; }
+        .name-banner:after { right: -12px; }
+
+        /* 标签 (右上角) */
+        .tags {
+            position: absolute;
+            top: 15px; 
+            right: 15px;
+            display: flex; 
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-end;
+            z-index: 10;
+        }
+        .tag {
+            background: rgba(255, 255, 255, 0.7);
+            color: #c8b98b;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            border: 1px solid #c8b98b;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        /* 标签与文本内嵌的小图标样式 */
+        .tag-icon {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+        .inline-icon {
+            width: 13px;
+            height: 13px;
+            vertical-align: -2px;
+            margin: 0 1px;
+            object-fit: contain;
+        }
+
+        /* 效果描述 (底部) */
+        .effect-area {
+            position: absolute;
+            bottom: 35px; 
+            left: 5%;
+            width: 90%;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.88);
+            border-radius: 12px;
+            border: 2px solid #eaeaea;
+            padding: 10px 14px;
+            box-sizing: border-box;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .effect-main {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .effect-sub {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.35;
+        }
+
+        /* 底部落款文本 */
+        .card-footer {
+            position: absolute;
+            bottom: 10px; 
+            width: 100%;
+            display: flex; 
+            justify-content: space-between;
+            padding: 0 18px;
+            box-sizing: border-box;
+            color: #b0b0b0; 
+            font-size: 10px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 费用 (使用本地图片背景) -->
+        <div class="cost">2</div>
+
+        <!-- 名称 -->
+        <div class="name-banner">提瓦特煎蛋</div>
+
+        <!-- 标签 -->
+        <div class="tags">
+            <div class="tag">事件牌</div>
+            <div class="tag">
+                <!-- 本地料理标签图标 -->
+                <img src="public/assets/tags/UI_Gcg_Tag_Card_Food.png" class="tag-icon" alt="料理">
+                <span>料理</span>
+            </div>
+        </div>
+
+        <!-- 效果描述区域 -->
+        <div class="effect-area">
+            <div class="effect-main">复苏目标角色，并治疗此角色1点。</div>
+            <div class="effect-sub">
+                （每回合中，最多通过「<img src="public/assets/tags/UI_Gcg_Tag_Card_Food.png" class="inline-icon" alt="料理">料理」复苏1个角色，并且每个角色最多食用1次「<img src="public/assets/tags/UI_Gcg_Tag_Card_Food.png" class="inline-icon" alt="料理">料理」）
+            </div>
+        </div>
+
+        <!-- 卡片底部文本 -->
+        <div class="card-footer">
+            <div class="footer-left">©miHoYo ©SHININGSOUL</div>
+            <div class="footer-right">GCG26S-A091 0</div>
+        </div>
+    </div>
+</body>
+</html>
