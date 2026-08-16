@@ -237,15 +237,15 @@ export async function renderCard(opts) {
     ctx.fillText('请上传背景图', W / 2, H / 2)
   }
 
-  // cost dice
+  // cost dice — stacked vertically top-left
   const diceSize = W * 0.155
   const gap = W * 0.012
-  let cx = W * 0.025
+  let cy = W * 0.032
   for (const item of costItems) {
     const def = COST_DEFS[item.type]
     if (!def) continue
-    await drawDice(ctx, def.icon, item.count, cx, W * 0.032, diceSize)
-    cx += diceSize + gap
+    await drawDice(ctx, def.icon, item.count, W * 0.025, cy, diceSize)
+    cy += diceSize + gap
   }
 
   // name banner

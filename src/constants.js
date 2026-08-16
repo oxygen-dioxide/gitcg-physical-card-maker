@@ -14,17 +14,17 @@ export const CARD_TYPE_LABELS = {
 }
 
 export const COST_DEFS = {
-  GCG_COST_DICE_ANEMO: { label: '风', icon: 'UI_Gcg_DiceL_Wind_Glow_HD.png' },
   GCG_COST_DICE_CRYO: { label: '冰', icon: 'UI_Gcg_DiceL_Ice_Glow_HD.png' },
-  GCG_COST_DICE_DENDRO: { label: '草', icon: 'UI_Gcg_DiceL_Grass_Glow_HD.png' },
-  GCG_COST_DICE_ELECTRO: { label: '雷', icon: 'UI_Gcg_DiceL_Electric_Glow_HD.png' },
-  GCG_COST_DICE_GEO: { label: '岩', icon: 'UI_Gcg_DiceL_Rock_Glow_HD.png' },
   GCG_COST_DICE_HYDRO: { label: '水', icon: 'UI_Gcg_DiceL_Water_Glow_HD.png' },
   GCG_COST_DICE_PYRO: { label: '火', icon: 'UI_Gcg_DiceL_Fire_Glow_HD.png' },
-  GCG_COST_DICE_SAME: { label: '同', icon: 'UI_Gcg_DiceL_Same_Glow_HD.png' },
-  GCG_COST_DICE_VOID: { label: '任', icon: 'UI_Gcg_DiceL_Any_Glow_HD.png' },
-  GCG_COST_ENERGY: { label: '能', icon: 'UI_Gcg_DiceL_Energy_Glow_HD.png' },
-  GCG_COST_LEGEND: { label: '秘', icon: 'UI_Gcg_DiceL_Legend_Glow_HD.png' },
+  GCG_COST_DICE_ELECTRO: { label: '雷', icon: 'UI_Gcg_DiceL_Electric_Glow_HD.png' },
+  GCG_COST_DICE_ANEMO: { label: '风', icon: 'UI_Gcg_DiceL_Wind_Glow_HD.png' },
+  GCG_COST_DICE_GEO: { label: '岩', icon: 'UI_Gcg_DiceL_Rock_Glow_HD.png' },
+  GCG_COST_DICE_DENDRO: { label: '草', icon: 'UI_Gcg_DiceL_Grass_Glow_HD.png' },
+  GCG_COST_DICE_SAME: { label: '相同元素', icon: 'UI_Gcg_DiceL_Same_Glow_HD.png' },
+  GCG_COST_DICE_VOID: { label: '无色元素', icon: 'UI_Gcg_DiceL_Any_Glow_HD.png' },
+  GCG_COST_ENERGY: { label: '充能', icon: 'UI_Gcg_DiceL_Energy_Glow_HD.png' },
+  GCG_COST_LEGEND: { label: '秘传', icon: 'UI_Gcg_DiceL_Legend_Glow_HD.png' },
 }
 
 export const TAG_DEFS = {

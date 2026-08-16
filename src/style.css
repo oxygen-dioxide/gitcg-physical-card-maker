@@ -126,8 +126,9 @@ input[type="file"]::file-selector-button:hover { border-color: #e8d98e; }
   align-items: center;
   margin-bottom: 6px;
 }
-.cost-row select { width: 140px; }
-.cost-row input[type="number"] { width: 60px; }
+.cost-row select { flex: 1; min-width: 0; }
+.cost-row input[type="number"] { width: 60px; flex-shrink: 0; }
+.cost-row .btn { flex-shrink: 0; }
 
 .row-2 { display: flex; gap: 12px; }
 .row-2 > div { flex: 1; }
