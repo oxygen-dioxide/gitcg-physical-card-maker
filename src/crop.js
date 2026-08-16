@@ -18,7 +18,7 @@ export function createCropEditor(containerEl, imageEl, onChange) {
 
   // Maximized crop box in source pixels, centered
   let cropW, cropH
-  if (srcW / srcH > aspect) {
+  if (srcW / srcH < aspect) {
     cropW = srcW
     cropH = srcW / aspect
   } else {
