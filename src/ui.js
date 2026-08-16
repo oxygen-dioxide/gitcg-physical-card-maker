@@ -28,7 +28,7 @@ function getCostInputs() {
   const items = []
   costSelects.forEach((sel, i) => {
     const count = parseInt(costNums[i]?.value) || 0
-    if (sel.value && count > 0) items.push({ type: sel.value, count })
+    if (sel.value) items.push({ type: sel.value, count })
   })
   return items
 }
@@ -168,7 +168,7 @@ function selectCard(card) {
   const costList = document.getElementById('cost-list')
   costList.innerHTML = ''
   ;(card.playCost || []).forEach(c => addCostRow(c.type, c.count))
-  if (!(card.playCost && card.playCost.length)) addCostRow('', 0)
+  if (!(card.playCost && card.playCost.length)) addCostRow('GCG_COST_DICE_SAME', 0)
 
   document.getElementById('name-input').value = card.name || ''
   const desc = card.description || ''
