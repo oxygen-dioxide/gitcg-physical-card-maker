@@ -50,8 +50,7 @@ function updatePreview() {
 		costItems: getCostInputs(),
 		name: document.getElementById("name-input")?.value || "",
 		tags: allTags,
-		effectMain: document.getElementById("effect-main")?.value || "",
-		effectSub: document.getElementById("effect-sub")?.value || "",
+		effectText: document.getElementById("effect-text")?.value || "",
 		footerLeft: document.getElementById("footer-left")?.value || "",
 		footerRight: document.getElementById("footer-right")?.value || "",
 	}).then((canvas) => {
@@ -71,8 +70,7 @@ function downloadCard() {
 		costItems: getCostInputs(),
 		name: document.getElementById("name-input")?.value || "",
 		tags: allTags,
-		effectMain: document.getElementById("effect-main")?.value || "",
-		effectSub: document.getElementById("effect-sub")?.value || "",
+		effectText: document.getElementById("effect-text")?.value || "",
 		footerLeft: document.getElementById("footer-left")?.value || "",
 		footerRight: document.getElementById("footer-right")?.value || "",
 	}).then((canvas) => {
@@ -205,14 +203,7 @@ function selectCard(card) {
 		addCostRow("GCG_COST_DICE_SAME", 0);
 
 	document.getElementById("name-input").value = card.name || "";
-	const desc = card.description || "";
-	const parts = desc.split("\n");
-	document.getElementById("effect-main").value = parts[0] || "";
-	document.getElementById("effect-sub").value = parts
-		.slice(1)
-		.join("\n")
-		.replace(/^（/, "")
-		.replace(/）$/, "");
+	document.getElementById("effect-text").value = card.description || "";
 	document.getElementById("footer-left").value = "©miHoYo";
 	document.getElementById("footer-right").value = "ID: " + card.id;
 
@@ -306,12 +297,8 @@ export function init() {
         <select id="tag-select"><option value="">选择标签...</option></select>
       </div>
       <div class="section">
-        <label>效果描述（主）</label>
-        <textarea id="effect-main" rows="2" placeholder="主效果"></textarea>
-      </div>
-      <div class="section">
-        <label>效果描述（副/括号内）</label>
-        <textarea id="effect-sub" rows="2" placeholder="副效果 / 规则说明"></textarea>
+        <label>效果描述</label>
+        <textarea id="effect-text" rows="3" placeholder="卡牌效果描述（支持换行）"></textarea>
       </div>
       <div class="section row-2">
         <div>
@@ -364,8 +351,7 @@ export function init() {
 	initTagEditor();
 
 	document.getElementById("name-input").oninput = updatePreview;
-	document.getElementById("effect-main").oninput = updatePreview;
-	document.getElementById("effect-sub").oninput = updatePreview;
+	document.getElementById("effect-text").oninput = updatePreview;
 	document.getElementById("footer-left").oninput = updatePreview;
 	document.getElementById("footer-right").oninput = updatePreview;
 

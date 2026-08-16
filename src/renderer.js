@@ -152,7 +152,7 @@ async function drawTags(ctx, tags, W) {
 	}
 }
 
-async function drawEffect(ctx, main, sub, x, y, w, h) {
+async function drawEffect(ctx, text, x, y, w, h) {
 	ctx.fillStyle = "rgba(255,255,255,0.88)";
 	rRect(ctx, x, y, w, h, h * 0.12);
 	ctx.fill();
@@ -161,33 +161,24 @@ async function drawEffect(ctx, main, sub, x, y, w, h) {
 	ctx.stroke();
 	const pad = w * 0.06;
 	const maxTxtW = w - pad * 2;
-	const mainFs = w * 0.038;
-	const subFs = w * 0.032;
+	const fs = w * 0.035;
 	let cy = y + pad * 0.9;
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	if (main) {
-		ctx.fillStyle = "#333";
-		ctx.font = `500 ${mainFs}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
-		const lines = splitLines(ctx, main, maxTxtW);
-		for (const ln of lines) {
-			ctx.fillText(ln, x + pad, cy);
-			cy += mainFs * 1.45;
-		}
-		cy += mainFs * 0.15;
-	}
-	if (sub) {
-		ctx.fillStyle = "#666";
-		ctx.font = `${subFs}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
-		const lines = splitLines(ctx, sub, maxTxtW);
-		for (const ln of lines) {
-			if (cy + subFs > y + h - pad * 0.3) {
+	ctx.fillStyle = "#333";
+	ctx.font = `500 ${fs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
+	const rawLines = (text || "").split("\n");
+	for (const raw of rawLines) {
+		const wrapped = splitLines(ctx, raw || " ", maxTxtW);
+		for (const ln of wrapped) {
+			if (cy + fs > y + h - pad * 0.3) {
 				ctx.fillText("…", x + pad, cy);
-				break;
+				return;
 			}
 			ctx.fillText(ln, x + pad, cy);
-			cy += subFs * 1.4;
+			cy += fs * 1.45;
 		}
+		cy += fs * 0.15;
 	}
 }
 
@@ -212,8 +203,7 @@ export async function renderCard(opts) {
 		costItems = [],
 		name = "",
 		tags = [],
-		effectMain = "",
-		effectSub = "",
+		effectText = "",
 		footerLeft = "",
 		footerRight = "",
 	} = opts;
@@ -276,7 +266,7 @@ export async function renderCard(opts) {
 	const effH = H * 0.2;
 	const effX = (W - effW) / 2;
 	const effY = H - effH - H * 0.044;
-	await drawEffect(ctx, effectMain, effectSub, effX, effY, effW, effH);
+	await drawEffect(ctx, effectText, effX, effY, effW, effH);
 
 	// footer
 	drawFooter(ctx, footerLeft, footerRight, W, H);
