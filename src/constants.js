@@ -4,8 +4,8 @@ export const SCALE = 12
 export const CANVAS_W = CARD_W * SCALE
 export const CANVAS_H = CARD_H * SCALE
 
-export const CROP_W = 88
-export const CROP_H = 63
+export const CROP_ASPECT_W = 63
+export const CROP_ASPECT_H = 88
 
 export const CARD_TYPE_LABELS = {
   GCG_CARD_EVENT: '事件牌',
@@ -46,7 +46,7 @@ export const TAG_DEFS = {
   GCG_TAG_CARD_BLESSING: { label: '元素幻变', icon: 'UI_Gcg_Tag_Card_Blessing.png' },
   GCG_TAG_ADVENTURE_PLACE: { label: '冒险地点', icon: 'UI_Gcg_Tag_Card_Adventure.png' },
   GCG_TAG_NATION_SIMULANKA: { label: '希穆兰卡', icon: 'UI_Gcg_Tag_Card_Simulanka.png' },
-  GCG_TAG_SLOWLY: { label: '魔导', icon: 'UI_Gcg_Tag_Hexenzirkel.png' },
+  GCG_TAG_HEXENZIRKEL: { label: '魔导', icon: 'UI_Gcg_Tag_Hexenzirkel.png' },
   GCG_TAG_SLOWLY: { label: '战斗行动', icon: 'UI_Gcg_Tag_Card_CombatAction.png' },
 }
 
