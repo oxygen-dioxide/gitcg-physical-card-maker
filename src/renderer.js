@@ -160,13 +160,13 @@ async function drawTags(ctx, tags) {
 }
 
 async function drawEffect(ctx, text, x, y, w, h) {
-	ctx.fillStyle = "rgba(255,255,255,0.88)";
+	ctx.fillStyle = "rgba(255,255,255,0.6)";
 	rRect(ctx, x, y, w, h, 12);
 	ctx.fill();
 	ctx.strokeStyle = "#eaeaea";
 	ctx.lineWidth = 2;
 	ctx.stroke();
-	const pad = 10;
+	const pad = 1.4 * S; // 16.8px
 	const maxTxtW = w - pad * 2;
 	const fs = 24;
 	let cy = y + pad;
@@ -192,11 +192,11 @@ async function drawEffect(ctx, text, x, y, w, h) {
 function drawFooter(ctx, left, right) {
 	const W = CANVAS_W;
 	const H = CANVAS_H;
-	const fs = 14;
+	const fs = 18;
 	const leftX = 5.3 * S; // 63.6px
 	const rightX = W - 5.3 * S;
 	const bottomY = H - 3.8 * S; // 404.4px
-	ctx.fillStyle = "#b0b0b0";
+	ctx.fillStyle = "#000000";
 	ctx.font = `${fs}px sans-serif`;
 	ctx.textBaseline = "bottom";
 	if (left) {
@@ -278,27 +278,9 @@ export async function renderCard(opts) {
 	// effect area: 3.9mm from left/right, 6.6mm from bottom
 	const effX = 3.9 * S; // 46.8px
 	const effW = W - effX * 2; // 662.4px
-	const effH = H - (3.9 + 6.6) * S - (H - effX * 2); // = H - 10.5*12 - top
-	// Actually: bottom edge at 6.6mm from bottom, top edge at 3.9mm from sides
-	// effY = H - effBottomMargin - effH, where effBottomMargin = 6.6mm
-	// But we need effH. Let's compute: top of effect = some value
-	// From spec:距左右两侧3.9mm, 距底部6.6mm → that gives X, width, and bottomY
-	// We need to derive height. Let's use the bottom margin:
+	const effH = H - (3.9 + 6.6) * S - (H - effX * 2); 
 	const effBottomMargin = 6.6 * S; // 79.2px
 	const effTopMargin = H - effBottomMargin; // bottom of effect area in canvas coords
-	// We need a reasonable height. Let's compute from remaining space:
-	// Top of card to top of effect area. Let's set a reasonable top.
-	// From the spec, no top position is given for effect area. Let's use the space between name/tags and footer.
-	// Name top ≈ 51px, name bottom ≈ 111px. Footer at ≈ 404px.
-	// Effect top ≈ 140px (below tags), effect bottom = H - 6.6mm = 1056 - 79.2 = 976.8px
-	// That's too tall. Let me use a more reasonable height.
-	// Actually: effTop = tags area bottom + some margin. Tags first at 68px, last tag maybe at 68+36*4=212px.
-	// Let's set effH based on remaining space with proper margins.
-	// Better approach: the effect area spans from below the tags to above the footer text.
-	// effTop = firstDiceCy + diceSize/2 + diceGap * (costItems.length-1) + some margin
-	// Simplest: just set a fixed height based on the示例 proportions.
-	// In示例: effect area height = 90px in 440px card = 20.5%
-	// 88mm * 20.5% ≈ 18mm
 	const effHeightMm = 18;
 	const effHCalc = effHeightMm * S; // 216px
 	const effYCalc = H - effBottomMargin - effHCalc; // 1056 - 79.2 - 216 = 760.8px

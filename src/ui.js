@@ -204,7 +204,7 @@ function selectCard(card) {
 
 	document.getElementById("name-input").value = card.name || "";
 	document.getElementById("effect-text").value = card.description || "";
-	document.getElementById("footer-left").value = "©miHoYo";
+	document.getElementById("footer-left").value = "©miHoYo  ©SHININGSOUL";
 	document.getElementById("footer-right").value = "ID: " + card.id;
 
 	renderTagDisplay();
@@ -303,7 +303,7 @@ export function init() {
       <div class="section row-2">
         <div>
           <label>左下角文本</label>
-          <input type="text" id="footer-left" placeholder="©miHoYo" />
+          <input type="text" id="footer-left" placeholder="©miHoYo  ©SHININGSOUL" />
         </div>
         <div>
           <label>右下角文本</label>
