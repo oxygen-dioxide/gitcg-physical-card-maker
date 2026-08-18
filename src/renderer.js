@@ -91,11 +91,11 @@ async function drawDice(ctx, iconName, count, cx, cy, size) {
 	ctx.fillStyle = "#fff";
 	ctx.strokeStyle = "#000";
 	ctx.lineWidth = size * 0.06;
-	ctx.font = `bold ${size * 0.52}px sans-serif`;
+	ctx.font = `bold ${size * 0.50}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
-	ctx.strokeText(String(count), cx, cy + 1);
-	ctx.fillText(String(count), cx, cy + 1);
+	ctx.strokeText(String(count), cx, cy + 6);
+	ctx.fillText(String(count), cx, cy + 6);
 }
 
 function drawName(ctx, name, x, y, w, h) {
@@ -227,7 +227,7 @@ export async function renderCard(opts) {
 	const W = CANVAS_W;
 	const H = CANVAS_H;
 
-	// background
+	// background (背景图)
 	if (backgroundImage) {
 		const iw = backgroundImage.naturalWidth || backgroundImage.width;
 		const ih = backgroundImage.naturalHeight || backgroundImage.height;
@@ -252,7 +252,8 @@ export async function renderCard(opts) {
 		ctx.fillText("请上传背景图", W / 2, H / 2);
 	}
 
-	// cost dice — stacked vertically top-left
+	// cost dice (费用)
+	// stacked vertically top-left
 	const diceSize = 10 * S; // 120px
 	const firstDiceCx = 7.9 * S; // 94.8px
 	const firstDiceCy = 7.1 * S; // 85.2px
@@ -265,17 +266,19 @@ export async function renderCard(opts) {
 		diceCy += diceGap;
 	}
 
-	// name banner: 31mm × 5mm, centered
+	// name banner (名称)
+	// 31mm × 5mm, centered
 	const bnW = 31 * S; // 492px
 	const bnH = 5 * S; // 60px
 	const bnX = (W - bnW) / 2; // 132px
 	const bnY = firstDiceCy - bnH / 2 - S; // aligned with first dice, slightly up
 	drawName(ctx, name, bnX, bnY, bnW, bnH);
 
-	// tags
+	// tags (标签)
 	await drawTags(ctx, tags);
 
-	// effect area: 3.9mm from left/right, 6.6mm from bottom
+	// effect area (效果描述)
+	// 3.9mm from left/right, 6.6mm from bottom
 	const effX = 3.9 * S; // 46.8px
 	const effW = W - effX * 2; // 662.4px
 	const effH = H - (3.9 + 6.6) * S - (H - effX * 2); 
@@ -286,7 +289,7 @@ export async function renderCard(opts) {
 	const effYCalc = H - effBottomMargin - effHCalc; // 1056 - 79.2 - 216 = 760.8px
 	await drawEffect(ctx, effectText, effX, effYCalc, effW, effHCalc);
 
-	// footer
+	// footer (页脚，包括左下角文本和右下角文本)
 	drawFooter(ctx, footerLeft, footerRight);
 
 	return canvas;
