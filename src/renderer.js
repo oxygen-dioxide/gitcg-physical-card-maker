@@ -5,6 +5,7 @@ import {
 	TAG_DEFS,
 	HIDDEN_TAGS,
 	assetsUrl,
+	assetsTagsUrl,
 } from "./constants.js";
 
 const S = 12; // scale: 1mm = 12px
@@ -44,13 +45,22 @@ function diamond(ctx, cx, cy, r) {
 	ctx.fill();
 }
 
+// Measure text and shrink the font to fit maxW, without drawing.
+// Returns the final rendered text width.
+function measureFit(ctx, text, maxW) {
+	let w = ctx.measureText(text).width;
+	if (w > maxW && w) {
+		const ratio = maxW / w;
+		const fs = Number.parseFloat(ctx.font) * ratio;
+		ctx.font = ctx.font.replace(/\d+(\.\d+)?(?=px)/, fs.toFixed(1));
+		w = ctx.measureText(text).width;
+	}
+	return w;
+}
+
 function fitText(ctx, text, cx, cy, maxW) {
 	ctx.fillText(text, cx, cy);
-	const w = ctx.measureText(text).width;
-	if (w <= maxW || !w) return;
-	const ratio = maxW / w;
-	let fs = Number.parseFloat(ctx.font) * ratio;
-	ctx.font = ctx.font.replace(/\d+(\.\d+)?(?=px)/, fs.toFixed(1));
+	measureFit(ctx, text, maxW);
 	ctx.fillText(text, cx, cy);
 }
 
@@ -91,7 +101,7 @@ async function drawDice(ctx, iconName, count, cx, cy, size) {
 	ctx.fillStyle = "#fff";
 	ctx.strokeStyle = "#000";
 	ctx.lineWidth = size * 0.06;
-	ctx.font = `bold ${size * 0.50}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
+	ctx.font = `bold ${size * 0.5}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
 	ctx.strokeText(String(count), cx, cy + 6);
@@ -127,7 +137,7 @@ async function drawTags(ctx, tags) {
 	const tagGap = 3 * S; // 36px (center to center)
 	const tagCx = W - 8.1 * S; // 490.8px
 
-	const fontSize = tagH * 0.58;
+	const fontSize = tagH * 0.7;
 	const iconSz = tagH * 0.7;
 	const padX = tagH * 0.15;
 
@@ -136,25 +146,36 @@ async function drawTags(ctx, tags) {
 	for (const tag of tags) {
 		const tagTop = tagCy - tagH / 2;
 		const tagLeft = tagCx - tagW / 2;
-		ctx.fillStyle = "rgba(255,255,255,0.72)";
+		ctx.fillStyle = "#ac7e51";
 		rRect(ctx, tagLeft, tagTop, tagW, tagH, tagH / 2);
 		ctx.fill();
-		ctx.strokeStyle = "#c8b98b";
-		ctx.lineWidth = 1;
+		ctx.strokeStyle = "#ffffff";
+		ctx.lineWidth = 2;
 		ctx.stroke();
-		let tx = tagLeft + padX;
-		if (tag.iconFile) {
-			try {
-				const img = await loadImg(assetsUrl(tag.iconFile));
-				ctx.drawImage(img, tx, tagCy - iconSz / 2, iconSz, iconSz);
-				tx += iconSz + padX;
-			} catch (_) {}
-		}
-		ctx.fillStyle = "#8a7558";
+
 		ctx.textAlign = "left";
 		ctx.textBaseline = "middle";
-		const textMaxW = tagLeft + tagW - padX - tx;
-		fitText(ctx, tag.label, tx, tagCy + 1, textMaxW);
+		ctx.fillStyle = "#ffffff";
+		ctx.font = `${fontSize}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
+
+		// icon + text rendered as one centered group inside the capsule
+		let icon = null;
+		if (tag.iconFile) {
+			try {
+				icon = await loadImg(assetsTagsUrl(tag.iconFile));
+			} catch (_) {}
+		}
+		const iconPad = icon ? iconSz + padX : 0;
+		const textMaxW = tagW - 2 * padX - iconPad;
+		const textW = measureFit(ctx, tag.label, textMaxW);
+		const contentW = textW + iconPad;
+
+		let gx = tagCx - contentW / 2;
+		if (icon) {
+			ctx.drawImage(icon, gx, tagCy - iconSz / 2, iconSz, iconSz);
+			gx += iconSz + padX;
+		}
+		ctx.fillText(tag.label, gx, tagCy + 1);
 		tagCy += tagGap;
 	}
 }
@@ -281,7 +302,7 @@ export async function renderCard(opts) {
 	// 3.9mm from left/right, 6.6mm from bottom
 	const effX = 3.9 * S; // 46.8px
 	const effW = W - effX * 2; // 662.4px
-	const effH = H - (3.9 + 6.6) * S - (H - effX * 2); 
+	const effH = H - (3.9 + 6.6) * S - (H - effX * 2);
 	const effBottomMargin = 6.6 * S; // 79.2px
 	const effTopMargin = H - effBottomMargin; // bottom of effect area in canvas coords
 	const effHeightMm = 18;

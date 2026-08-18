@@ -80,10 +80,7 @@ export const TAG_DEFS = {
 		icon: "UI_Gcg_Tag_Card_Simulanka.png",
 	},
 	GCG_TAG_HEXENZIRKEL: { label: "魔导", icon: "UI_Gcg_Tag_Hexenzirkel.png" },
-	GCG_TAG_SLOWLY: {
-		label: "战斗行动",
-		icon: "UI_Gcg_Tag_Card_CombatAction.png",
-	},
+	GCG_TAG_SLOWLY: { label: "战斗行动", icon: null },
 };
 
 export const HIDDEN_TAGS = new Set([
@@ -94,3 +91,4 @@ export const HIDDEN_TAGS = new Set([
 ]);
 
 export const assetsUrl = (name) => `assets/${name}`;
+export const assetsTagsUrl = (name) => `assets/tags/${name}`;
