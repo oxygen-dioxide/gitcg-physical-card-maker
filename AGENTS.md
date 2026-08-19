@@ -4,7 +4,7 @@ Vanilla JS + Vite app that renders custom Genshin TCG ("七圣召唤") physical 
 
 ## Commands
 - `npm run dev` — Vite dev server (port 5173, `open: true`). `npm run build` / `preview` also available.
-- `npx @biomejs/biome format --write` - code formatting
+- `biome format --write` - code formatting
 
 ## Architecture
 - `index.html` → `src/main.js` (loads fonts, calls `ui.init`) → `src/ui.js` (UI/state) → `src/renderer.js` (canvas drawing).

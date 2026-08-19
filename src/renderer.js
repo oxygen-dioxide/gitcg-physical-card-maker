@@ -194,6 +194,7 @@ async function drawEffect(ctx, text, x, y, w, h) {
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.strokeStyle = "#fff";
+	ctx.lineWidth = 5;
 	ctx.fillStyle = "#333";
 	ctx.font = `500 ${fs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
 	const rawLines = (text || "").split("\n");
@@ -206,7 +207,7 @@ async function drawEffect(ctx, text, x, y, w, h) {
 			}
 			ctx.strokeText(ln, x + pad, cy);
 			ctx.fillText(ln, x + pad, cy);
-			
+
 			cy += fs * 1.4;
 		}
 		cy += fs * 0.2;
@@ -304,17 +305,35 @@ export async function renderCard(opts) {
 	// tags (标签)
 	await drawTags(ctx, tags);
 
-	// effect area (效果描述)
-	// 3.9mm from left/right, 6.6mm from bottom
+	// effect area (效果描述) — 自适应高度
+	// 3.9mm from left/right, 6.6mm from bottom; 高度根据文本量自动伸缩
 	const effX = 3.9 * S; // 46.8px
 	const effW = W - effX * 2; // 662.4px
-	const effH = H - (3.9 + 6.6) * S - (H - effX * 2);
 	const effBottomMargin = 6.6 * S; // 79.2px
-	const effTopMargin = H - effBottomMargin; // bottom of effect area in canvas coords
-	const effHeightMm = 18;
-	const effHCalc = effHeightMm * S; // 216px
-	const effYCalc = H - effBottomMargin - effHCalc; // 1056 - 79.2 - 216 = 760.8px
-	await drawEffect(ctx, effectText, effX, effYCalc, effW, effHCalc);
+	const effPad = 1.4 * S; // 16.8px
+	const effFs = 24; // 与 drawEffect 中的字号保持一致
+	const effLineH = effFs * 1.4;
+	const effRawSpacing = effFs * 0.2;
+	const effMaxTxtW = effW - effPad * 2;
+
+	// 按固定宽度计算折行后的总行数与所需高度
+	ctx.font = `500 ${effFs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
+	let effLineCount = 0;
+	const effRawLines = (effectText || "").split("\n");
+	for (const raw of effRawLines) {
+		effLineCount += splitLines(ctx, raw || " ", effMaxTxtW).length;
+	}
+
+	let effH =
+		effPad * 2 + effLineCount * effLineH + effRawLines.length * effRawSpacing;
+
+	// 不让文本框向上越过名称条，避免重叠
+	const effMinY = bnY + bnH + S;
+	const effMaxH = H - effBottomMargin - effMinY;
+	if (effH > effMaxH) effH = effMaxH;
+
+	const effY = H - effBottomMargin - effH;
+	await drawEffect(ctx, effectText, effX, effY, effW, effH);
 
 	// footer (页脚，包括左下角文本和右下角文本)
 	drawFooter(ctx, footerLeft, footerRight);
