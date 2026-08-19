@@ -125,7 +125,7 @@ function drawName(ctx, name, x, y, w, h) {
 	ctx.font = `bold ${h * 0.6}px 'HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
-	fitText(ctx, name, x + w / 2, y + h / 2 + 1, w * 0.82);
+	fitText(ctx, name, x + w / 2, y + h / 2 + 3, w * 0.82);
 }
 
 async function drawTags(ctx, tags) {
@@ -193,6 +193,7 @@ async function drawEffect(ctx, text, x, y, w, h) {
 	let cy = y + pad;
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
+	ctx.strokeStyle = "#fff";
 	ctx.fillStyle = "#333";
 	ctx.font = `500 ${fs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
 	const rawLines = (text || "").split("\n");
@@ -203,7 +204,9 @@ async function drawEffect(ctx, text, x, y, w, h) {
 				ctx.fillText("…", x + pad, cy);
 				return;
 			}
+			ctx.strokeText(ln, x + pad, cy);
 			ctx.fillText(ln, x + pad, cy);
+			
 			cy += fs * 1.4;
 		}
 		cy += fs * 0.2;
@@ -217,15 +220,18 @@ function drawFooter(ctx, left, right) {
 	const leftX = 5.3 * S; // 63.6px
 	const rightX = W - 5.3 * S;
 	const bottomY = H - 3.8 * S; // 404.4px
+	ctx.strokeStyle = "#ffffff";
 	ctx.fillStyle = "#000000";
 	ctx.font = `${fs}px sans-serif`;
 	ctx.textBaseline = "bottom";
 	if (left) {
 		ctx.textAlign = "left";
+		ctx.strokeText(left, leftX, bottomY);
 		ctx.fillText(left, leftX, bottomY);
 	}
 	if (right) {
 		ctx.textAlign = "right";
+		ctx.strokeText(right, rightX, bottomY);
 		ctx.fillText(right, rightX, bottomY);
 	}
 }
