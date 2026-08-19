@@ -299,7 +299,7 @@ export async function renderCard(opts) {
 	const bnW = 31 * S; // 492px
 	const bnH = 5 * S; // 60px
 	const bnX = (W - bnW) / 2; // 132px
-	const bnY = firstDiceCy - bnH / 2 - S; // aligned with first dice, slightly up
+	const bnY = firstDiceCy - bnH / 2; // aligned with first dice, slightly up
 	drawName(ctx, name, bnX, bnY, bnW, bnH);
 
 	// tags (标签)
