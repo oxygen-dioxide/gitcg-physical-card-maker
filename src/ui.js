@@ -8,6 +8,7 @@ import {
 import { CARDS, imageUrlFor } from "./data.js";
 import { renderCard } from "./renderer.js";
 import { createCropEditor } from "./crop.js";
+import { rawToMarkdown } from "./description.js";
 
 let cropEditor = null;
 let bgImage = null;
@@ -203,7 +204,7 @@ function selectCard(card) {
 		addCostRow("GCG_COST_DICE_SAME", 0);
 
 	document.getElementById("name-input").value = card.name || "";
-	document.getElementById("effect-text").value = card.description || "";
+	document.getElementById("effect-text").value = rawToMarkdown(card.rawDescription) || card.description || "";
 	document.getElementById("footer-left").value = "©miHoYo  ©SHININGSOUL";
 	document.getElementById("footer-right").value = "ID: " + card.id;
 
@@ -298,7 +299,7 @@ export function init() {
       </div>
       <div class="section">
         <label>效果描述</label>
-        <textarea id="effect-text" rows="3" placeholder="卡牌效果描述（支持换行）"></textarea>
+        <textarea id="effect-text" rows="3" placeholder="支持 **粗体**、*斜体*、&lt;color=#RRGGBBAA&gt;颜色&lt;/color&gt;、![](图标编号)、{{关键词名}}"></textarea>
       </div>
       <div class="section row-2">
         <div>

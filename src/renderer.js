@@ -4,9 +4,12 @@ import {
 	COST_DEFS,
 	TAG_DEFS,
 	HIDDEN_TAGS,
+	DESCRIPTION_ICON_IMAGES,
+	TAG_ICON_ASSETS,
 	assetsUrl,
 	assetsTagsUrl,
 } from "./constants.js";
+import { parseMarkdown } from "./description.js";
 
 const S = 12; // scale: 1mm = 12px
 
@@ -62,23 +65,6 @@ function fitText(ctx, text, cx, cy, maxW) {
 	ctx.fillText(text, cx, cy);
 	measureFit(ctx, text, maxW);
 	ctx.fillText(text, cx, cy);
-}
-
-function splitLines(ctx, text, maxW) {
-	if (!text) return [];
-	const lines = [];
-	let line = "";
-	for (const ch of text) {
-		const test = line + ch;
-		if (ctx.measureText(test).width > maxW) {
-			lines.push(line);
-			line = ch;
-		} else {
-			line = test;
-		}
-	}
-	if (line) lines.push(line);
-	return lines;
 }
 
 async function drawDice(ctx, iconName, count, cx, cy, size) {
@@ -180,7 +166,106 @@ async function drawTags(ctx, tags) {
 	}
 }
 
-async function drawEffect(ctx, text, x, y, w, h) {
+function applyFont(ctx, fs, item) {
+	const fam = item.bold
+		? "'HYWH'"
+		: "'HYWH-55W','HYWH'";
+	ctx.font = `500 ${fs}px ${fam},'Microsoft YaHei','Noto Sans SC',sans-serif`;
+}
+
+// 将 span 流按宽度折行，返回各行（每行是 span 数组）以及图标尺寸。
+// 换行以单个字符为单位，与加粗/斜体/颜色的边界无关：只有当前行真正放不下
+// 下一个字符时才换行；同一行内相邻且样式相同的字符会合并回一个文本 span，
+// 以便整段一起描边/填充。
+function layoutItems(ctx, items, fs, maxW) {
+	const iconSize = Math.round(fs * 1.25);
+	const lines = [];
+	let cur = []; // 当前行的原子：{kind:'icon'} 或 {kind:'text', ch, bold, italic, color}
+	let w = 0;
+	const pushLine = () => {
+		// 把相邻、样式相同的文本字符合并成一个 span，再作为一行输出。
+		const run = [];
+		let last = null;
+		for (const atom of cur) {
+			if (atom.kind === "text") {
+				if (
+					last &&
+					last.kind === "text" &&
+					last.bold === atom.bold &&
+					last.italic === atom.italic &&
+					last.color === atom.color
+				) {
+					last.text += atom.ch;
+				} else {
+					last = {
+						kind: "text",
+						text: atom.ch,
+						bold: atom.bold,
+						italic: atom.italic,
+						color: atom.color,
+					};
+					run.push(last);
+				}
+			} else {
+				run.push(atom);
+				last = null;
+			}
+		}
+		lines.push(run);
+		cur = [];
+		w = 0;
+	};
+	for (const item of items) {
+		if (item.kind === "br") {
+			if (cur.length) pushLine();
+			continue;
+		}
+		if (item.kind === "icon") {
+			if (w > 0 && w + iconSize > maxW) pushLine();
+			cur.push({ kind: "icon", iconId: item.iconId });
+			w += iconSize;
+			continue;
+		}
+		// 文本：逐字符填充，满了再换行。
+		for (const ch of Array.from(item.text)) {
+			applyFont(ctx, fs, item);
+			const cw = ctx.measureText(ch).width;
+			if (w > 0 && w + cw > maxW) pushLine();
+			cur.push({
+				kind: "text",
+				ch,
+				bold: item.bold,
+				italic: item.italic,
+				color: item.color,
+			});
+			w += cw;
+		}
+	}
+	if (cur.length) pushLine();
+	return { lines, iconSize };
+}
+
+// 把图标绘制成正方形。资源可用则画图片，否则画黑色正方形。
+async function drawIcon(ctx, iconId, x, y, size) {
+	const def = DESCRIPTION_ICON_IMAGES[iconId];
+	let src = null;
+	if (def && def.image) src = assetsUrl(def.image);
+	else if (def && def.tagIcon) {
+		const f = TAG_ICON_ASSETS[def.tagIcon];
+		if (f) src = assetsTagsUrl(f);
+	}
+	if (src) {
+		try {
+			const img = await loadImg(src);
+			ctx.drawImage(img, x, y, size, size);
+			return;
+		} catch (_) {}
+	}
+	ctx.fillStyle = "#000";
+	ctx.fillRect(x, y, size, size);
+}
+
+async function drawEffect(ctx, items, x, y, w, h) {
 	ctx.fillStyle = "rgba(255,255,255,0.6)";
 	rRect(ctx, x, y, w, h, 12);
 	ctx.fill();
@@ -190,27 +275,46 @@ async function drawEffect(ctx, text, x, y, w, h) {
 	const pad = 1.4 * S; // 16.8px
 	const maxTxtW = w - pad * 2;
 	const fs = 24;
+	const { lines, iconSize } = layoutItems(ctx, items, fs, maxTxtW);
+	const lineH = fs * 1.4;
+	const iconOffset = (fs - iconSize) / 2;
 	let cy = y + pad;
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.strokeStyle = "#fff";
 	ctx.lineWidth = 5;
-	ctx.fillStyle = "#333";
-	ctx.font = `500 ${fs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
-	const rawLines = (text || "").split("\n");
-	for (const raw of rawLines) {
-		const wrapped = splitLines(ctx, raw || " ", maxTxtW);
-		for (const ln of wrapped) {
-			if (cy + fs > y + h - pad) {
-				ctx.fillText("…", x + pad, cy);
-				return;
-			}
-			ctx.strokeText(ln, x + pad, cy);
-			ctx.fillText(ln, x + pad, cy);
-
-			cy += fs * 1.4;
+	for (const line of lines) {
+		if (cy + fs > y + h - pad) {
+			ctx.fillStyle = "#333";
+			ctx.font = `500 ${fs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
+			ctx.fillText("…", x + pad, cy);
+			return;
 		}
-		cy += fs * 0.2;
+		let cx = x + pad;
+		for (const item of line) {
+			if (item.kind === "icon") {
+				await drawIcon(ctx, item.iconId, cx, cy + iconOffset, iconSize);
+				cx += iconSize;
+				continue;
+			}
+			applyFont(ctx, fs, item);
+			ctx.fillStyle = item.color || "#333";
+			if (item.italic) {
+				// 以文本起点为锚点向右倾斜（负剪切系数 → 右上倾），且不改变锚点位置。
+				ctx.save();
+				ctx.translate(cx, cy);
+				ctx.transform(1, 0, -0.25, 1, 0, 0);
+				ctx.translate(-cx, -cy);
+				ctx.strokeText(item.text, cx, cy);
+				ctx.fillText(item.text, cx, cy);
+				ctx.restore();
+			} else {
+				ctx.strokeText(item.text, cx, cy);
+				ctx.fillText(item.text, cx, cy);
+			}
+			cx += ctx.measureText(item.text).width;
+		}
+		cy += lineH;
 	}
 }
 
@@ -312,20 +416,18 @@ export async function renderCard(opts) {
 	const effBottomMargin = 6.6 * S; // 79.2px
 	const effPad = 1.4 * S; // 16.8px
 	const effFs = 24; // 与 drawEffect 中的字号保持一致
-	const effLineH = effFs * 1.4;
-	const effRawSpacing = effFs * 0.2;
 	const effMaxTxtW = effW - effPad * 2;
 
-	// 按固定宽度计算折行后的总行数与所需高度
-	ctx.font = `500 ${effFs}px 'HYWH-55W','HYWH','Microsoft YaHei','Noto Sans SC',sans-serif`;
-	let effLineCount = 0;
-	const effRawLines = (effectText || "").split("\n");
-	for (const raw of effRawLines) {
-		effLineCount += splitLines(ctx, raw || " ", effMaxTxtW).length;
-	}
+	// 解析标记文本 → span 流，并按固定宽度折行得到总行数。
+	const effItems = parseMarkdown(effectText || "");
+	const { lines: effLines } = layoutItems(ctx, effItems, effFs, effMaxTxtW);
+	const effLineH = effFs * 1.4;
+	const effRawSpacing = effFs * 0.2;
+	let effLineCount = effLines.length;
+	const effRawCount = effItems.filter((it) => it.kind === "br").length + 1;
 
 	let effH =
-		effPad * 2 + effLineCount * effLineH + effRawLines.length * effRawSpacing;
+		effPad * 2 + effLineCount * effLineH + (effRawCount - 1) * effRawSpacing;
 
 	// 不让文本框向上越过名称条，避免重叠
 	const effMinY = bnY + bnH + S;
@@ -333,7 +435,7 @@ export async function renderCard(opts) {
 	if (effH > effMaxH) effH = effMaxH;
 
 	const effY = H - effBottomMargin - effH;
-	await drawEffect(ctx, effectText, effX, effY, effW, effH);
+	await drawEffect(ctx, effItems, effX, effY, effW, effH);
 
 	// footer (页脚，包括左下角文本和右下角文本)
 	drawFooter(ctx, footerLeft, footerRight);
