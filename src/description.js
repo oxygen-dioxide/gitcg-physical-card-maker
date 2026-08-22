@@ -176,7 +176,10 @@ export function parseMarkdown(md, opts) {
 	if (!md) return [];
 	const src = String(md);
 	const depth = (opts && opts.depth) || 0;
-	if (depth > 6) return [{ kind: "text", text: src, bold: false, italic: false, color: null }];
+	if (depth > 6)
+		return [
+			{ kind: "text", text: src, bold: false, italic: false, color: null },
+		];
 	const items = [];
 	let bold = false;
 	let italic = false;
@@ -233,16 +236,12 @@ export function parseMarkdown(md, opts) {
 		}
 		if ((m = rest.match(MARK_KEYWORD_RE))) {
 			flush();
-			expandKeyword(
-				m[1],
-				items,
-				{
-					bold,
-					italic,
-					color: colorStack.length ? colorStack[colorStack.length - 1] : null,
-					depth: depth + 1,
-				},
-			);
+			expandKeyword(m[1], items, {
+				bold,
+				italic,
+				color: colorStack.length ? colorStack[colorStack.length - 1] : null,
+				depth: depth + 1,
+			});
 			i += m[0].length;
 			continue;
 		}

@@ -3,7 +3,10 @@ import {
 	COST_DEFS,
 	TAG_DEFS,
 	HIDDEN_TAGS,
+	DESCRIPTION_ICON_IMAGES,
+	TAG_ICON_ASSETS,
 	assetsUrl,
+	assetsTagsUrl,
 } from "./constants.js";
 import { CARDS, imageUrlFor } from "./data.js";
 import { renderCard } from "./renderer.js";
@@ -204,7 +207,8 @@ function selectCard(card) {
 		addCostRow("GCG_COST_DICE_SAME", 0);
 
 	document.getElementById("name-input").value = card.name || "";
-	document.getElementById("effect-text").value = rawToMarkdown(card.rawDescription) || card.description || "";
+	document.getElementById("effect-text").value =
+		rawToMarkdown(card.rawDescription) || card.description || "";
 	document.getElementById("footer-left").value = "©miHoYo  ©SHININGSOUL";
 	document.getElementById("footer-right").value = "ID: " + card.id;
 
@@ -264,6 +268,86 @@ function renderCardList(keyword) {
 	});
 }
 
+function helpIconSrc(id) {
+	const def = DESCRIPTION_ICON_IMAGES[id];
+	if (def && def.image) return assetsUrl(def.image);
+	if (def && def.tagIcon) {
+		const f = TAG_ICON_ASSETS[def.tagIcon];
+		if (f) return assetsTagsUrl(f);
+	}
+	return null;
+}
+
+function buildDescHelp() {
+	const colors = [
+		["冰", "#99FFFFFF"],
+		["水", "#80C0FFFF"],
+		["火", "#FF9999FF"],
+		["雷", "#FFACFFFF"],
+		["风", "#80FFD7FF"],
+		["岩", "#FFE699FF"],
+		["草", "#7EC236FF"],
+		["天赋技能", "#FFD780FF"],
+	];
+	const body = el("div");
+
+	const cTitle = el("h4", { className: "help-title" }, "常用颜色");
+	body.appendChild(cTitle);
+	const cTable = el("table", { className: "help-table" });
+	for (const [label, color] of colors) {
+		const tr = el("tr");
+		const tdLabel = el("td");
+		tdLabel.appendChild(
+			el("span", {
+				style: `color:${color};font-weight:bold;`,
+				text: label,
+			}),
+		);
+		const tdCode = el("td", { className: "help-code" });
+		tdCode.textContent = `<color=${color}>`;
+		tr.append(tdLabel, tdCode);
+		cTable.appendChild(tr);
+	}
+	body.appendChild(cTable);
+
+	const iTitle = el("h4", { className: "help-title" }, "图标编号");
+	body.appendChild(iTitle);
+	const iTable = el("table", { className: "help-table" });
+	for (const idStr of Object.keys(DESCRIPTION_ICON_IMAGES)) {
+		const id = Number(idStr);
+		const src = helpIconSrc(id);
+		const tr = el("tr");
+		const tdIcon = el("td");
+		if (src) {
+			tdIcon.appendChild(el("img", { src, className: "help-icon" }));
+		} else {
+			tdIcon.appendChild(
+				el("span", { className: "help-icon help-icon-empty" }),
+			);
+		}
+		const tdCode = el("td", { className: "help-code" });
+		tdCode.textContent = `![](${id})`;
+		tr.append(tdIcon, tdCode);
+		iTable.appendChild(tr);
+	}
+	body.appendChild(iTable);
+	return body;
+}
+
+function openDescHelp() {
+	const drawer = document.getElementById("help-drawer");
+	const body = document.getElementById("help-drawer-body");
+	if (!body.firstChild) body.appendChild(buildDescHelp());
+	drawer.classList.add("open");
+	drawer.setAttribute("aria-hidden", "false");
+}
+
+function closeDescHelp() {
+	const drawer = document.getElementById("help-drawer");
+	drawer.classList.remove("open");
+	drawer.setAttribute("aria-hidden", "true");
+}
+
 export function init() {
 	const app = document.getElementById("app");
 	app.innerHTML = `
@@ -298,7 +382,10 @@ export function init() {
         <select id="tag-select"><option value="">选择标签...</option></select>
       </div>
       <div class="section">
-        <label>效果描述</label>
+        <div class="section-head">
+          <label>效果描述</label>
+          <button id="desc-help-btn" class="btn btn-sm">说明</button>
+        </div>
         <textarea id="effect-text" rows="3" placeholder="支持 **粗体**、*斜体*、&lt;color=#RRGGBBAA&gt;颜色&lt;/color&gt;、![](图标编号)、{{关键词名}}"></textarea>
       </div>
       <div class="section row-2">
@@ -318,6 +405,13 @@ export function init() {
       <div id="card-preview" class="card-preview"></div>
     </div>
   </div>
+  <aside class="help-drawer" id="help-drawer" aria-hidden="true">
+    <div class="help-drawer-head">
+      <h3>效果描述语法说明</h3>
+      <button id="help-close-btn" class="btn btn-sm">×</button>
+    </div>
+    <div class="help-drawer-body" id="help-drawer-body"></div>
+  </aside>
   `;
 
 	document.getElementById("bg-upload").addEventListener("change", (e) => {
@@ -357,6 +451,12 @@ export function init() {
 	document.getElementById("footer-right").oninput = updatePreview;
 
 	document.getElementById("download-btn").onclick = downloadCard;
+
+	document.getElementById("desc-help-btn").onclick = openDescHelp;
+	document.getElementById("help-close-btn").onclick = closeDescHelp;
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape") closeDescHelp();
+	});
 
 	updatePreview();
 }

@@ -167,9 +167,7 @@ async function drawTags(ctx, tags) {
 }
 
 function applyFont(ctx, fs, item) {
-	const fam = item.bold
-		? "'HYWH'"
-		: "'HYWH-55W','HYWH'";
+	const fam = item.bold ? "'HYWH'" : "'HYWH-55W','HYWH'";
 	ctx.font = `500 ${fs}px ${fam},'Microsoft YaHei','Noto Sans SC',sans-serif`;
 }
 
