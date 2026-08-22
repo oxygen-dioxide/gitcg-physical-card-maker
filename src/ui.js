@@ -203,8 +203,12 @@ function selectCard(card) {
 	const costList = document.getElementById("cost-list");
 	costList.innerHTML = "";
 	(card.playCost || []).forEach((c) => addCostRow(c.type, c.count));
-	if (!(card.playCost && card.playCost.length))
-		addCostRow("GCG_COST_DICE_SAME", 0);
+	// 没有任何一种以 GCG_COST_DICE 开头的费用时才补充一个“0 个相同元素”占位行
+	//（例如仅含 GCG_COST_LEGEND 秘传费用的卡牌）。
+	const hasDiceCost = (card.playCost || []).some((c) =>
+		(String(c.type) || "").startsWith("GCG_COST_DICE"),
+	);
+	if (!hasDiceCost) addCostRow("GCG_COST_DICE_SAME", 0);
 
 	document.getElementById("name-input").value = card.name || "";
 	document.getElementById("effect-text").value =
