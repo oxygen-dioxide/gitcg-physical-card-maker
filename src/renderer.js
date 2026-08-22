@@ -67,7 +67,7 @@ function fitText(ctx, text, cx, cy, maxW) {
 	ctx.fillText(text, cx, cy);
 }
 
-async function drawDice(ctx, iconName, count, cx, cy, size) {
+async function drawDice(ctx, iconName, count, cx, cy, size, showCount = true) {
 	const x = cx - size / 2;
 	const y = cy - size / 2;
 	try {
@@ -84,6 +84,8 @@ async function drawDice(ctx, iconName, count, cx, cy, size) {
 		rRect(ctx, x, y, size, size, size * 0.18);
 		ctx.fill();
 	}
+	// 秘传（GCG_COST_LEGEND）只显示图标，不显示数字。
+	if (!showCount) return;
 	ctx.fillStyle = "#fff";
 	ctx.strokeStyle = "#000";
 	ctx.lineWidth = size * 0.06;
@@ -392,7 +394,16 @@ export async function renderCard(opts) {
 	for (const item of costItems) {
 		const def = COST_DEFS[item.type];
 		if (!def) continue;
-		await drawDice(ctx, def.icon, item.count, firstDiceCx, diceCy, diceSize);
+		const showCount = item.type !== "GCG_COST_LEGEND";
+		await drawDice(
+			ctx,
+			def.icon,
+			item.count,
+			firstDiceCx,
+			diceCy,
+			diceSize,
+			showCount,
+		);
 		diceCy += diceGap;
 	}
 

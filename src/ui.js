@@ -109,6 +109,17 @@ function createCostRow(index, type, count) {
 	return row;
 }
 
+function insertCostRow(index, type, count) {
+	const container = document.getElementById("cost-list");
+	const row = createCostRow(index, type, count);
+	if (index >= container.children.length) {
+		container.appendChild(row);
+	} else {
+		container.insertBefore(row, container.children[index]);
+	}
+	bindCostEvents();
+}
+
 function addCostRow(type, count) {
 	const container = document.getElementById("cost-list");
 	container.appendChild(createCostRow(Date.now(), type, count));
@@ -208,7 +219,7 @@ function selectCard(card) {
 	const hasDiceCost = (card.playCost || []).some((c) =>
 		(String(c.type) || "").startsWith("GCG_COST_DICE"),
 	);
-	if (!hasDiceCost) addCostRow("GCG_COST_DICE_SAME", 0);
+	if (!hasDiceCost) insertCostRow(0, "GCG_COST_DICE_SAME", 0);
 
 	document.getElementById("name-input").value = card.name || "";
 	document.getElementById("effect-text").value =
